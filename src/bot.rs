@@ -6,7 +6,7 @@ use serde_json;
 
 type ReqwestResult = reqwest::Result<reqwest::Response>;
 
-const URL: &'static str = "https://api.telegram.org/bot";
+const URL: &str = "https://api.telegram.org/bot";
 
 #[derive(Debug)]
 pub struct Bot {
@@ -39,30 +39,30 @@ impl Bot {
             .send()
     }
 
-    pub fn send_message(&self, chat_id: String, text: String) -> ReqwestResult {
+    pub fn send_message(&self, chat_id: &str, text: &str) -> ReqwestResult {
         let body = SendMessage {
-            chat_id,
-            text,
-            parse_mode: "HTML".to_string(),
+            chat_id: chat_id.to_owned(),
+            text: text.to_owned(),
+            parse_mode: "HTML".to_owned(),
             disable_web_page_preview: true,
         };
 
-        self.send("sendMessage", &body)
+        self.send("sendMessage", body)
     }
 
     pub fn forward_message(
         &self,
-        from_chat_id: String,
-        chat_id: String,
+        from_chat_id: &str,
+        chat_id: &str,
         message_id: usize,
     ) -> ReqwestResult {
         let body = ForwardMessage {
-            from_chat_id,
-            chat_id,
+            from_chat_id: from_chat_id.to_owned(),
+            chat_id: chat_id.to_owned(),
             message_id,
         };
 
-        self.send("forwardMessage", &body)
+        self.send("forwardMessage", body)
     }
 
     pub fn response_id(mut res: reqwest::Response) -> Option<usize> {
