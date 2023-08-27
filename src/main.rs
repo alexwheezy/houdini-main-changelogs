@@ -18,12 +18,12 @@ use std::fs;
 
 mod bot;
 mod html;
+mod log;
 mod parsers;
-mod types;
 
 use crate::parsers::*;
 
-const FILE_NAME: &'static str = "houdini_main_changelogs.last_id";
+const FILE_NAME: &str = "houdini_main_changelogs.last_id";
 
 fn file_path() -> std::path::PathBuf {
     let config_dir: Option<std::path::PathBuf> = env::var("CONFIG_DIR")
@@ -62,16 +62,19 @@ fn main() -> Result<(), Error> {
     let mut last_id_to_be_saved = last_id;
 
     println!("Last ID: {}", last_id);
-    println!("Starting fetch articles list...");
+    println!("Starting fetch changelog list...");
 
+    //let document = Document::from(include_str!("sidefx_changelogs.html"));
     let html = reqwest::get("https://sidefx.com/changelog")?.text()?;
     let document = Document::from(html.as_str());
-    let change_log = parse_change_log(&document, last_id)?;
+    let change_log_list = parse_change_log(&document, last_id)?;
 
-    println!("{:#?}", change_log.last_log());
+    let (build, change_log) = change_log_list.last_log();
+    let publish = format!("<b>Daily Build: {build}</b>\n\n{change_log}");
+    //println!("{publish}");
 
-    //let bot = bot::Bot::new(bot_token);
-    //bot.send_message(chat_id.clone(), "Houdini Change Logs".to_owned());
+    let bot = bot::Bot::new(bot_token);
+    bot.send_message(&chat_id.clone(), &publish)?;
 
     //if id > last_id_to_be_saved {
     //    last_id_to_be_saved = id;
