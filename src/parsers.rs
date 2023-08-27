@@ -5,7 +5,7 @@ use itertools::Itertools;
 use select::document::Document;
 use select::predicate::{Class, Name, Predicate};
 
-use crate::types::*;
+use crate::log::ChangeLogList;
 
 #[derive(Debug, Fail)]
 pub enum ParseChangeLogError {
