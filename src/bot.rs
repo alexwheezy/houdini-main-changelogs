@@ -1,8 +1,6 @@
-use reqwest;
 use reqwest::header::{HeaderValue, CONTENT_LENGTH, CONTENT_TYPE};
 use reqwest::Url;
 use serde::Serialize;
-use serde_json;
 
 type ReqwestResult = reqwest::Result<reqwest::Response>;
 
@@ -50,6 +48,7 @@ impl Bot {
         self.send("sendMessage", body)
     }
 
+    #[allow(dead_code)]
     pub fn forward_message(
         &self,
         from_chat_id: &str,
@@ -65,6 +64,7 @@ impl Bot {
         self.send("forwardMessage", body)
     }
 
+    #[allow(dead_code)]
     pub fn response_id(mut res: reqwest::Response) -> Option<usize> {
         res.text()
             .ok()
