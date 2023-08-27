@@ -1,5 +1,5 @@
-name: 'ThisWeekInRust Internal Action'
-description: 'Action to once post to this week in rust'
+name: 'Houdini Main Changelogs Internal Action'
+description: 'Action to publish daily patch reports'
 inputs:
   bot-token:
     description: 'Telegram bot token'
@@ -8,7 +8,7 @@ inputs:
     description: 'Telegram chat ID or @username'
     required: true
   config-dir:
-    description: 'Where search file this_week_in_rust.last_id'
+    description: 'Where search file houdini_main_changelogs.last_id'
     required: true
 outputs:
   last-id:
