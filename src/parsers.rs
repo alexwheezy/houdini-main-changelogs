@@ -1,11 +1,10 @@
-use std::path::Path;
-
 use failure::Fail;
 use itertools::Itertools;
 use select::document::Document;
 use select::predicate::{Class, Name, Predicate};
+use std::path::Path;
 
-use crate::log::ChangeLogList;
+use crate::log::ChangeLog;
 
 #[derive(Debug, Fail)]
 pub enum ParseChangeLogError {
@@ -15,11 +14,8 @@ pub enum ParseChangeLogError {
     DescriptionNotFound,
 }
 
-pub fn parse_change_log(
-    doc: &Document,
-    last_id: i32,
-) -> Result<ChangeLogList, ParseChangeLogError> {
-    let mut log_list = ChangeLogList::new(last_id);
+pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError> {
+    let mut logs = ChangeLog::new();
     for table in doc.find(Class("table-striped").descendant(Name("tr"))) {
         if let Some(path) = table.find(Name("img")).next() {
             let source = path.attr("src").ok_or(ParseChangeLogError::SourceNotFound);
@@ -44,10 +40,10 @@ pub fn parse_change_log(
                 .collect::<Vec<String>>();
 
             match (data.get(0), data.get(1)) {
-                (Some(build), Some(description)) => log_list.add_log(build, category, description),
+                (Some(build), Some(description)) => logs.fill(build, category, description),
                 _ => return Err(ParseChangeLogError::DescriptionNotFound),
             }
         }
     }
-    Ok(log_list)
+    Ok(logs)
 }
