@@ -1,14 +1,24 @@
 #![allow(dead_code)]
-use std::{collections::BTreeMap, fmt::Display};
 
-type LogCategory = BTreeMap<String, Vec<String>>;
+use anyhow;
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    fmt::Display,
+    fs::OpenOptions,
+    io::{BufReader, BufWriter, Write},
+};
 
-#[derive(Debug, Default)]
-pub struct ChangeLog {
-    category: LogCategory,
+const LOG_PATH: &'static str = "changelog.json";
+
+type Category = BTreeMap<String, BTreeSet<String>>;
+type Log = BTreeMap<String, Info>;
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct Info {
+    category: Category,
 }
 
-impl Display for ChangeLog {
+impl Display for Info {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for (key, values) in self.category.iter() {
             writeln!(f, "#<b>{}</b>:", key.to_uppercase())?;
@@ -20,48 +30,83 @@ impl Display for ChangeLog {
     }
 }
 
-#[derive(Debug, Default)]
-pub struct ChangeLogList {
-    id: i32,
-    data: BTreeMap<String, ChangeLog>,
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct ChangeLog {
+    data: Log,
 }
 
-impl ChangeLogList {
-    pub fn new(id: i32) -> Self {
+impl ChangeLog {
+    pub fn new() -> Self {
         Self {
-            id,
-            data: BTreeMap::default(),
+            data: BTreeMap::new(),
         }
     }
 
-    pub fn add_log(&mut self, build: &str, category: &str, description: &str) {
+    pub fn with_data(build: &str, log: Info) -> Self {
+        Self {
+            data: Log::from([(build.to_owned(), log)]),
+        }
+    }
+
+    pub fn fill(&mut self, build: &str, category: &str, description: &str) {
         self.data
             .entry(build.to_owned())
-            .or_insert(ChangeLog::default())
+            .or_insert(Info::default())
             .category
             .entry(category.to_owned())
-            .or_insert(Vec::default())
-            .push(description.to_owned())
+            .or_insert(BTreeSet::default())
+            .insert(description.to_owned());
     }
 
-    pub fn last_log(&self) -> (&String, &ChangeLog) {
-        self.data.last_key_value().unwrap()
+    pub fn load(&self) -> anyhow::Result<ChangeLog> {
+        let file = OpenOptions::new().read(true).open(LOG_PATH)?;
+        let reader = BufReader::new(file);
+        let changelog = serde_json::from_reader(reader)?;
+        Ok(changelog)
     }
-}
 
-#[test]
-fn test_key() {
-    let change_log_list = ChangeLogList::new(42);
-    assert!(!change_log_list.data.contains_key("19.5.501"));
-}
+    pub fn store(&self) -> anyhow::Result<()> {
+        let file = OpenOptions::new()
+            .create(true)
+            .truncate(true)
+            .write(true)
+            .open(LOG_PATH)?;
+        let mut writter = BufWriter::new(file);
+        serde_json::to_writer_pretty(&mut writter, &self)?;
+        writter.flush()?;
+        Ok(())
+    }
 
-#[test]
-fn test_add_log() {
-    let mut change_log_list = ChangeLogList::new(42);
-    change_log_list.add_log("19.5.501", "lop", "sphere");
-    let log = change_log_list.data.get(&"19.5.501".to_owned()).unwrap();
-    assert_eq!(
-        log.category,
-        BTreeMap::from([("lop".to_owned(), vec!["sphere".to_owned()])])
-    )
+    pub fn update(&mut self) -> anyhow::Result<()> {
+        let prev_changelog = self.load()?;
+        let (prev_build, prev_info) = prev_changelog.last_record().unwrap();
+        let (next_build, next_info) = self.last_record().unwrap();
+
+        let mut next_info = next_info.clone();
+        if prev_build == next_build {
+            for (category, description) in next_info.category.iter_mut() {
+                if let Some(data) = prev_info.category.get(category) {
+                    let diff = description
+                        .difference(data)
+                        .cloned()
+                        .collect::<BTreeSet<_>>();
+                    *description = diff;
+                }
+            }
+        }
+        *self = Self::with_data(next_build, next_info);
+        Ok(())
+    }
+
+    pub fn pretty_print(&self) {
+        println!("{:#?}", self.data);
+    }
+
+    pub fn first_record(&self) -> Option<(&String, &Info)> {
+        self.data.first_key_value()
+    }
+
+    pub fn last_record(&self) -> Option<(&String, &Info)> {
+        self.data.last_key_value()
+    }
 }
