@@ -1,0 +1,18 @@
+{
+  "data": {
+    "19.5.724": {
+      "category": {
+        "solaris": [
+          "Improve the performance of Storm in the LOP scene viewer by leaving GPU buffers on the GPU. Also, if a render delegate does not provide a depth buffer, don't do depth testing when drawing selection outlines."
+        ],
+        "sop": [
+          "Fixed a bug in the Distance from Geometry SOP that could result in incorrect distance measurements when the \"refgrouptype\" parameter was set to primitives."
+        ],
+        "unreal": [
+          "Fixed a rare crash when changing maps with an HDA loaded.",
+          "Fixed multi parameter blocks not expanding."
+        ]
+      }
+    }
+  }
+}
