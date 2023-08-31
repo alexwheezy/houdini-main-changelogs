@@ -12,7 +12,7 @@ extern crate serde_json;
 use dotenv::dotenv;
 use failure::Error;
 use select::document::Document;
-use std::env;
+use std::{env, io::stdin};
 
 mod bot;
 mod html;
@@ -20,7 +20,7 @@ mod log;
 mod parsers;
 mod utils;
 
-use crate::{log::Info, parsers::parse_change_log};
+use crate::parsers::parse_change_log;
 
 fn main() -> Result<(), Error> {
     env_logger::init();
@@ -40,14 +40,22 @@ fn main() -> Result<(), Error> {
 
     let (build, changelog) = changelog.last_record().unwrap();
     if changelog.is_empty() {
+        println!("There have been no updates lately. Come back later.");
         return Ok(());
     }
 
-    let publish = format!("<b>Daily Build: {build}</b>\n\n{changelog}");
-    println!("{publish}");
+    let post = format!("<b>Daily Build: {build}</b>\n\n{changelog}");
+    println!("Preview Post:\n\n{post}");
 
-    //let bot = bot::Bot::new(bot_token);
-    //bot.send_message(&chat_id.clone(), &publish)?;
+    println!("Are we posting this?");
+    let mut input = String::new();
+    stdin().read_line(&mut input)?;
+
+    if input.trim() == "Y" {
+        println!("Sending...");
+        let bot = bot::Bot::new(bot_token);
+        bot.send_message(&chat_id.clone(), &post)?;
+    }
 
     Ok(())
 }
