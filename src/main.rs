@@ -20,7 +20,7 @@ mod log;
 mod parsers;
 mod utils;
 
-use crate::parsers::*;
+use crate::{log::Info, parsers::parse_change_log};
 
 fn main() -> Result<(), Error> {
     env_logger::init();
@@ -39,6 +39,10 @@ fn main() -> Result<(), Error> {
     changelog.store().unwrap();
 
     let (build, changelog) = changelog.last_record().unwrap();
+    if changelog.is_empty() {
+        return Ok(());
+    }
+
     let publish = format!("<b>Daily Build: {build}</b>\n\n{changelog}");
     println!("{publish}");
 
