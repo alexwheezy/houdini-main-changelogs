@@ -14,6 +14,11 @@ pub enum ParseChangeLogError {
     DescriptionNotFound,
 }
 
+/// The function parses an HTML page and returns a new object of type [`ChangeLog`]
+///
+/// # Errors
+///
+/// This function will return an error if category source tags or category description not found.
 pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError> {
     let mut logs = ChangeLog::new();
     for table in doc.find(Class("table-striped").descendant(Name("tr"))) {

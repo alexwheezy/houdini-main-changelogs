@@ -31,8 +31,6 @@ fn main() -> Result<(), Error> {
         .expect("Expected BOT_TOKEN env var");
     let chat_id = env::var("CHAT_ID").ok().expect("Expected CHAT_ID env var");
 
-    //let html = Document::from(include_str!("sidefx_changelogs.html"));
-    //let document = Document::from(html);
     let html = reqwest::get("https://sidefx.com/changelog")?.text()?;
     let document = Document::from(html.as_str());
     let mut changelog = parse_change_log(&document)?;
