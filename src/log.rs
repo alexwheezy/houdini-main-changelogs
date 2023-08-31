@@ -126,7 +126,7 @@ impl ChangeLog {
             }
         }
         // Delete all empty categories along with entries
-        next_info.category.retain(|_, items| items.is_empty());
+        next_info.category.retain(|_, items| !items.is_empty());
         // Recreate the structure with new records
         *self = Self::with_data(next_build, next_info);
         Ok(())
