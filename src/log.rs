@@ -22,6 +22,23 @@ pub struct Info {
     category: Category,
 }
 
+impl Info {
+    /// Returns the categories of this [`Info`].
+    pub fn categories(&self) -> Vec<String> {
+        self.category.keys().cloned().collect()
+    }
+
+    /// Returns a description by category
+    pub fn description_by(&self, category: &str) -> Option<&BTreeSet<String>> {
+        self.category.get(category)
+    }
+
+    /// Returns True if the list of categories is not empty in [`Info`].
+    pub fn is_empty(&self) -> bool {
+        self.category.is_empty()
+    }
+}
+
 impl Display for Info {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for (key, values) in self.category.iter() {
@@ -108,7 +125,7 @@ impl ChangeLog {
         let (prev_build, prev_info) = prev_changelog.last_record().unwrap();
         let (next_build, next_info) = self.last_record().unwrap();
 
-        // TODO: Is it possible to avoid copying here?
+        //TODO: Is it possible to avoid copying here?
         let mut next_info = next_info.clone();
         if prev_build == next_build {
             for (category, description) in next_info.category.iter_mut() {
