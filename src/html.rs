@@ -1,4 +1,5 @@
 #[allow(dead_code)]
+
 pub fn escape(text: String) -> String {
     text.replace('&', "&amp;")
         .replace('\"', "&quot;")
