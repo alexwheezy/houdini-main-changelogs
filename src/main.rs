@@ -24,7 +24,7 @@ use crate::parsers::parse_change_log;
 
 fn main() -> Result<(), Error> {
     env_logger::init();
-    dotenv()?;
+    dotenv().expect("config file .env not found");
 
     let bot_token = env::var("BOT_TOKEN")
         .ok()
@@ -37,8 +37,8 @@ fn main() -> Result<(), Error> {
 
     // Uploading the latest logs for analysis.
     let prev_build = changelog.load().unwrap();
-    let prev_record = &prev_build.last_record().unwrap();
 
+    let prev_record = &prev_build.last_record().unwrap();
     let next_record = &changelog.last_record().unwrap();
 
     // If the previous and next entry do not differ
