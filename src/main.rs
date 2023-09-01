@@ -35,14 +35,24 @@ fn main() -> Result<(), Error> {
     let document = Document::from(html.as_str());
     let mut changelog = parse_change_log(&document)?;
 
+    // Uploading the latest logs for analysis.
+    let prev_build = changelog.load().unwrap();
+    let prev_record = &prev_build.last_record().unwrap();
+
+    let next_record = &changelog.last_record().unwrap();
+
+    // If the previous and next entry do not differ
+    // then changing the state of the logs is not required.
+    if prev_record == next_record {
+        println!("There have been no updates lately. Come back later.");
+        return Ok(());
+    }
+
+    // Update logs and save to disk.
     changelog.update().unwrap();
     changelog.store().unwrap();
 
     let (build, changelog) = changelog.last_record().unwrap();
-    if changelog.is_empty() {
-        println!("There have been no updates lately. Come back later.");
-        return Ok(());
-    }
 
     let post = format!("<b>Daily Build: {build}</b>\n\n{changelog}");
     println!("Preview Post:\n\n{post}");
