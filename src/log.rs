@@ -8,12 +8,13 @@ use std::{
     io::{BufReader, BufWriter, Write},
 };
 
+// FIXME: Do I need to make the path to the logs static or relative?
 const LOG_PATH: &'static str = "log/changelog.json";
 
 type Category = BTreeMap<String, BTreeSet<String>>;
 type Log = BTreeMap<String, Info>;
 
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Info {
     /// The category structure stores the category of a context
     /// and a description of the fixes for that context.
@@ -51,7 +52,7 @@ impl Display for Info {
     }
 }
 
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct ChangeLog {
     /// The structure will store a record in the form of the current build number
     /// and a description of the categories with changes between versions.
