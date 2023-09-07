@@ -9,6 +9,7 @@ extern crate serde_derive;
 extern crate hyper;
 extern crate serde_json;
 
+use anyhow::{Context, Result};
 use dotenv::dotenv;
 use failure::Error;
 use select::document::Document;
@@ -36,7 +37,7 @@ fn main() -> Result<(), Error> {
     let mut changelog = parse_change_log(&document)?;
 
     // Uploading the latest logs for analysis.
-    let prev_build = changelog.load().unwrap();
+    let prev_build = changelog.load().expect("load log failed");
 
     let prev_record = &prev_build.last_record().unwrap();
     let next_record = &changelog.last_record().unwrap();

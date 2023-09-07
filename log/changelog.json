@@ -1,16 +1,15 @@
 {
   "data": {
-    "19.5.724": {
+    "19.5.731": {
       "category": {
-        "solaris": [
-          "Improve the performance of Storm in the LOP scene viewer by leaving GPU buffers on the GPU. Also, if a render delegate does not provide a depth buffer, don't do depth testing when drawing selection outlines."
+        "general": [
+          "The viewport view-axis gnomon and the view pivot now respect the UI scale."
         ],
-        "sop": [
-          "Fixed a bug in the Distance from Geometry SOP that could result in incorrect distance measurements when the \"refgrouptype\" parameter was set to primitives."
+        "karma": [
+          "XPU: Fixed a bug where animated displacement did not update in IPR until render restart, or when rendering multiple frames offline within a single process."
         ],
         "unreal": [
-          "Fixed a rare crash when changing maps with an HDA loaded.",
-          "Fixed multi parameter blocks not expanding."
+          "Added ability to lock and unlock landscape edit layers via attributes."
         ]
       }
     }
