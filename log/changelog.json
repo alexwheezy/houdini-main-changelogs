@@ -1,15 +1,12 @@
 {
   "data": {
-    "19.5.731": {
+    "19.5.733": {
       "category": {
-        "general": [
-          "The viewport view-axis gnomon and the view pivot now respect the UI scale."
-        ],
-        "karma": [
-          "XPU: Fixed a bug where animated displacement did not update in IPR until render restart, or when rendering multiple frames offline within a single process."
+        "osx": [
+          "Addressed an issue where Karma XPU would use a lower thread quality of service class than expected. This resulted in the scheduler prioritizing temperature and acoustics over performance."
         ],
         "unreal": [
-          "Added ability to lock and unlock landscape edit layers via attributes."
+          "Fixed missing material slot prefixes with material attributes in skeletalmesh inputMaterial parameter attributes are now created when \"Export MaterialParameters\" is selected with skeletal mesh inputFixed an issue where the collider creation of skeletal mesh input couldfail if one or more body setups have simple physical materialsFixed an issue in the new input system with component level materialand physical material overrides where group filters were preventingthe overrides from being applied in some cases"
         ]
       }
     }

@@ -1,7 +1,7 @@
 use failure::Fail;
 use itertools::Itertools;
 use select::document::Document;
-use select::predicate::{Class, Name, Predicate};
+use select::predicate::{Class, Name, Or, Predicate};
 use std::path::Path;
 
 use crate::log::ChangeLog;
@@ -32,6 +32,10 @@ pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError
                 .strip_prefix("icon_")
                 .unwrap();
 
+            let test = table
+                .find(Or(Name("td"), Name("td").descendant(Name("li"))))
+                .for_each(|node| println!("{:?}", node));
+
             let data = table
                 .find(Name("td"))
                 .filter(|data| !data.text().is_empty())
@@ -51,4 +55,12 @@ pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError
         }
     }
     Ok(logs)
+}
+
+#[test]
+fn test_parse_html() {
+    let html = include_str!("../tests/input/Main _ Changelogs _ SideFX.html");
+    let document = Document::from(html);
+    let changelog = parse_change_log(&document);
+    //println!("{:?}", changelog);
 }
