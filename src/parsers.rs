@@ -26,6 +26,7 @@ pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError
     for table in doc.find(Class("table-striped").descendant(Name("tr"))) {
         if let Some(path) = table.find(Name("img")).next() {
             let source = path.attr("src").ok_or(ParseChangeLogError::SourceNotFound);
+            // Context category
             let category = Path::new(source.unwrap())
                 .file_stem()
                 .unwrap()
@@ -34,6 +35,7 @@ pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError
                 .strip_prefix("icon_")
                 .unwrap();
 
+            // Version number of the current program build
             let build = table
                 .find(Name("td"))
                 .skip(1)
@@ -42,6 +44,7 @@ pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError
                 .ok_or(ParseChangeLogError::BuildNotFound)?
                 .text();
 
+            // Description of the fix in the category
             let description = table
                 .find(Name("td").descendant(Name("p").or(Name("li"))))
                 .map(|node| {
@@ -61,12 +64,4 @@ pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError
         }
     }
     Ok(logs)
-}
-
-#[test]
-fn test_parse_html() {
-    let html = include_str!("../tests/input/Main _ Changelogs _ SideFX.html");
-    let document = Document::from(html);
-    let changelog = parse_change_log(&document);
-    println!("{:?}", changelog);
 }
