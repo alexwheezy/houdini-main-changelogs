@@ -1,13 +1,15 @@
 use failure::Fail;
 use itertools::Itertools;
 use select::document::Document;
-use select::predicate::{Class, Name, Or, Predicate};
+use select::predicate::{Class, Name, Predicate};
 use std::path::Path;
 
 use crate::log::ChangeLog;
 
 #[derive(Debug, Fail)]
 pub enum ParseChangeLogError {
+    #[fail(display = "build not found")]
+    BuildNotFound,
     #[fail(display = "source not found")]
     SourceNotFound,
     #[fail(display = "description not found")]
@@ -32,26 +34,30 @@ pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError
                 .strip_prefix("icon_")
                 .unwrap();
 
-            let test = table
-                .find(Or(Name("td"), Name("td").descendant(Name("li"))))
-                .for_each(|node| println!("{:?}", node));
-
-            let data = table
+            let build = table
                 .find(Name("td"))
-                .filter(|data| !data.text().is_empty())
-                .map(|data| {
-                    data.text()
+                .skip(1)
+                .take(1)
+                .next()
+                .ok_or(ParseChangeLogError::BuildNotFound)?
+                .text();
+
+            let description = table
+                .find(Name("td").descendant(Name("p").or(Name("li"))))
+                .map(|node| {
+                    node.text()
                         .trim()
                         .split(' ')
                         .filter(|s| !s.is_empty())
                         .join(" ")
                 })
-                .collect::<Vec<String>>();
+                .collect::<Vec<String>>()
+                .join("\n");
 
-            match (data.get(0), data.get(1)) {
-                (Some(build), Some(description)) => logs.fill(build, category, description),
-                _ => return Err(ParseChangeLogError::DescriptionNotFound),
+            if description.is_empty() {
+                return Err(ParseChangeLogError::DescriptionNotFound);
             }
+            logs.fill(&build, category, &description);
         }
     }
     Ok(logs)
@@ -62,5 +68,5 @@ fn test_parse_html() {
     let html = include_str!("../tests/input/Main _ Changelogs _ SideFX.html");
     let document = Document::from(html);
     let changelog = parse_change_log(&document);
-    //println!("{:?}", changelog);
+    println!("{:?}", changelog);
 }
