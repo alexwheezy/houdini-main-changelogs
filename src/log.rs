@@ -55,6 +55,7 @@ fn category_icons() -> BTreeMap<&'static str, &'static str> {
         ("render",  ":film_frames:"),
         ("rop",     ":film_frames:"),
         ("soho",    ":snake:"),
+        ("solaris", ":boom:"),
         ("sop",     ":brain:"),
         ("top",     ":tophat:"),
         ("ui",      ":level_slider:"),
@@ -103,7 +104,9 @@ impl Display for Info {
                 category = key.to_uppercase()
             )?;
             for value in values.iter() {
-                writeln!(f, "- {}\n", value)?;
+                for str in value.split("\n") {
+                    writeln!(f, "- {}\n", str)?;
+                }
             }
         }
         Ok(())
