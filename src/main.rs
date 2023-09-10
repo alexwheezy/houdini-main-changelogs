@@ -9,7 +9,7 @@ extern crate serde_derive;
 extern crate hyper;
 extern crate serde_json;
 
-use anyhow::{Context, Result};
+use anyhow::Result;
 use dotenv::dotenv;
 use failure::Error;
 use select::document::Document;
