@@ -14,6 +14,58 @@ const LOG_PATH: &'static str = "log/changelog.json";
 type Category = BTreeMap<String, BTreeSet<String>>;
 type Log = BTreeMap<String, Info>;
 
+fn category_icons() -> BTreeMap<&'static str, &'static str> {
+    #[rustfmt::skip]
+    let icons = BTreeMap::from([
+        ("channel", ":chart_with_upwards_trend:"),
+        ("charater",":snowboarder:"),
+        ("chop",    ":chart_with_upwards_trend:"),
+        ("cop2",    ":ticket:"),
+        ("crowd",   ":dolls:"),
+        ("doc",     ":page_facing_up:"),
+        ("dop",     ":ocean:"),
+        ("expr",    ":email:"),
+        ("fbx",     ":gift:"),
+        ("fur",     ":fox_face:"),
+        ("general", ":fish_cake:"),
+        ("geo",     ":bento:"),
+        ("gl",      ":gear:"),
+        ("gltf",    ""),
+        ("gplay",   ""),
+        ("grave",   ":pushpin:"),
+        ("handle",  ":joystick:"),
+        ("hapi",    ":nut_and_bolt:"),
+        ("hdk",     ":toolbox:"),
+        ("hqueue",  ":control_knobs:"),
+        ("image",   ":night_with_stars:"),
+        ("jive",    ":chart_with_upwards_trend:"),
+        ("karma",   ":maple_leaf:"),
+        ("license", ":key:"),
+        ("lop",     ":bulb:"),
+        ("mantra",  ":film_projector:"),
+        ("mplay",   ":vhs:"),
+        ("op",      ":gear:"),
+        ("opencl",  ":rocket:"),
+        ("osx",     ":green_apple:"),
+        ("otl",     ":package:"),
+        ("pdg",     ":tophat:"),
+        ("pop",     ":droplet:"),
+        ("pyro",    ":flame:"),
+        ("python",  ":snake:"),
+        ("render",  ":film_frames:"),
+        ("rop",     ":film_frames:"),
+        ("soho",    ":snake:"),
+        ("sop",     ":brain:"),
+        ("top",     ":tophat:"),
+        ("ui",      ":level_slider:"),
+        ("unreal",  ":crystal_ball:"),
+        ("vex",     ":mortar_board:"),
+        ("vop",     ":mortar_board:"),
+        ("windows", ":paperclip:"),
+    ]);
+    icons
+}
+
 #[derive(Debug, Clone, Default, PartialEq, PartialOrd, Serialize, Deserialize)]
 pub struct Info {
     /// The category structure stores the category of a context
@@ -42,8 +94,14 @@ impl Info {
 
 impl Display for Info {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let icons = category_icons();
         for (key, values) in self.category.iter() {
-            writeln!(f, "#<b>{}</b>:", key.to_uppercase())?;
+            writeln!(
+                f,
+                "{icon}#<b>{category}</b>:",
+                icon = icons.get(key.as_str()).unwrap_or(&""),
+                category = key.to_uppercase()
+            )?;
             for value in values.iter() {
                 writeln!(f, "- {}\n", value)?;
             }
