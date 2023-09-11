@@ -17,52 +17,53 @@ type Log = BTreeMap<String, Info>;
 fn category_icons() -> BTreeMap<&'static str, &'static str> {
     #[rustfmt::skip]
     let icons = BTreeMap::from([
-        ("channel", ":chart_with_upwards_trend:"),
-        ("charater",":snowboarder:"),
-        ("chop",    ":chart_with_upwards_trend:"),
-        ("cop2",    ":ticket:"),
-        ("crowd",   ":dolls:"),
-        ("doc",     ":page_facing_up:"),
-        ("dop",     ":ocean:"),
-        ("expr",    ":email:"),
-        ("fbx",     ":gift:"),
-        ("fur",     ":fox_face:"),
-        ("general", ":fish_cake:"),
-        ("geo",     ":bento:"),
-        ("gl",      ":gear:"),
-        ("gltf",    ""),
-        ("gplay",   ""),
-        ("grave",   ":pushpin:"),
-        ("handle",  ":joystick:"),
-        ("hapi",    ":nut_and_bolt:"),
-        ("hdk",     ":toolbox:"),
-        ("hqueue",  ":control_knobs:"),
-        ("image",   ":night_with_stars:"),
-        ("jive",    ":chart_with_upwards_trend:"),
-        ("karma",   ":maple_leaf:"),
-        ("license", ":key:"),
-        ("lop",     ":bulb:"),
-        ("mantra",  ":film_projector:"),
-        ("mplay",   ":vhs:"),
-        ("op",      ":gear:"),
-        ("opencl",  ":rocket:"),
-        ("osx",     ":green_apple:"),
-        ("otl",     ":package:"),
-        ("pdg",     ":tophat:"),
-        ("pop",     ":droplet:"),
-        ("pyro",    ":flame:"),
-        ("python",  ":snake:"),
-        ("render",  ":film_frames:"),
-        ("rop",     ":film_frames:"),
-        ("soho",    ":snake:"),
-        ("solaris", ":boom:"),
-        ("sop",     ":brain:"),
-        ("top",     ":tophat:"),
-        ("ui",      ":level_slider:"),
-        ("unreal",  ":crystal_ball:"),
-        ("vex",     ":mortar_board:"),
-        ("vop",     ":mortar_board:"),
-        ("windows", ":paperclip:"),
+        ("channel",  "\u{1f4c8}"),   //:chart_with_upwards_trend:
+        ("character","\u{1f3c2}"),   //:snowboarder:
+        ("chop",     "\u{1f4c8}"),   //:chart_with_upwards_trend:
+        ("cop2",     "\u{1f3ab}"),   //:ticket:
+        ("crowd",    "\u{1f38e}"),   //:dolls:
+        ("doc",      "\u{1f4c4}"),   //:page_facing_up:
+        ("dop",      "\u{1f30a}"),   //:ocean:
+        ("expr",     "\u{1f4e7}"),   //:email:
+        ("fbx",      "\u{1f381}"),   //:gift:
+        ("fur",      "\u{1f98a}"),   //:fox_face:
+        ("general",  "\u{1f365}"),   //:fish_cake:
+        ("geo",      "\u{1f371}"),   //:bento:
+        ("gl",       "\u{fe0f}"),    //:gear:
+        ("gltf",     ""),            //unknown
+        ("gplay",    ""),            //unknown
+        ("grave",    "\u{1f4cc}"),   //:pushpin:
+        ("handle",   "\u{1f579}"),   //:joystick:
+        ("hapi",     "\u{1f529}"),   //:nut_and_bolt:
+        ("hdk",      "\u{1f9f0}"),   //:toolbox:
+        ("hqueue",   "\u{1f39b}"),   //:control_knobs:
+        ("image",    "\u{1f303}"),   //:night_with_stars:
+        ("jive",     "\u{1f4c8}"),   //:chart_with_upwards_trend:
+        ("karma",    "\u{1f341}"),   //:maple_leaf:
+        ("license",  "\u{1f511}"),   //:key:
+        ("linux",    "\u{1f427}"),   //:penguin:
+        ("lop",      "\u{1f4a1}"),   //:bulb:
+        ("mantra",   "\u{1f4fd}"),   //:film_projector:
+        ("mplay",    "\u{1f4fc}"),   //:vhs:
+        ("op",       "\u{fe0f}"),    //:gear:
+        ("opencl",   "\u{1f680}"),   //:rocket:
+        ("osx",      "\u{1f34f}"),   //:green_apple:
+        ("otl",      "\u{1f4e6}"),   //:package:
+        ("pdg",      "\u{1f3a9}"),   //:tophat:
+        ("pop",      "\u{1f4a7}"),   //:droplet:
+        ("pyro",     "\u{1f525}"),   //:flame:
+        ("python",   "\u{1f40d}"),   //:snake:
+        ("render",   "\u{1f39e}"),   //:film_frames:
+        ("rop",      "\u{1f39e}"),   //:film_frames:
+        ("soho",     "\u{1f40d}"),   //:snake:
+        ("solaris",  "\u{1f4a5}"),   //:boom:
+        ("sop",      "\u{1f9e0}"),   //:brain:
+        ("top",      "\u{1f3a9}"),   //:tophat:
+        ("ui",       "\u{1f39a}"),   //:level_slider:
+        ("unreal",   "\u{1f52e}"),   //:crystal_ball:
+        ("vex",      "\u{1f393}"),   //:mortar_board:
+        ("vop",      "\u{1f393}"),   //:mortar_board:
+        ("windows",  "\u{1f4ce}"),   //:paperclip:
     ]);
     icons
 }
