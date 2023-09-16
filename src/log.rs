@@ -17,6 +17,7 @@ type Log = BTreeMap<String, Info>;
 fn category_icons() -> BTreeMap<&'static str, &'static str> {
     #[rustfmt::skip]
     let icons = BTreeMap::from([
+        ("3dsmax",   "\u{1fad6}"),   //:teapot:
         ("channel",  "\u{1f4c8}"),   //:chart_with_upwards_trend:
         ("character","\u{1f3c2}"),   //:snowboarder:
         ("chop",     "\u{1f4c8}"),   //:chart_with_upwards_trend:
@@ -44,6 +45,7 @@ fn category_icons() -> BTreeMap<&'static str, &'static str> {
         ("linux",    "\u{1f427}"),   //:penguin:
         ("lop",      "\u{1f4a1}"),   //:bulb:
         ("mantra",   "\u{1f4fd}"),   //:film_projector:
+        ("maya",     "\u{1f5ff}"),   //:film_projector:
         ("mplay",    "\u{1f4fc}"),   //:vhs:
         ("op",       "\u{fe0f}"),    //:gear:
         ("opencl",   "\u{1f680}"),   //:rocket:
@@ -60,6 +62,7 @@ fn category_icons() -> BTreeMap<&'static str, &'static str> {
         ("sop",      "\u{1f9e0}"),   //:brain:
         ("top",      "\u{1f3a9}"),   //:tophat:
         ("ui",       "\u{1f39a}"),   //:level_slider:
+        ("unity",    "\u{1f30f}"),   //:earth_asia:
         ("unreal",   "\u{1f52e}"),   //:crystal_ball:
         ("vex",      "\u{1f393}"),   //:mortar_board:
         ("vop",      "\u{1f393}"),   //:mortar_board:
