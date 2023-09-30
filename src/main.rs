@@ -13,7 +13,7 @@ use anyhow::Result;
 use dotenv::dotenv;
 use failure::Error;
 use select::document::Document;
-use std::{env, io::stdin};
+use std::env;
 
 mod bot;
 mod html;
@@ -45,7 +45,6 @@ fn main() -> Result<(), Error> {
     // If the previous and next entry do not differ
     // then changing the state of the logs is not required.
     if prev_record == next_record {
-        println!("There have been no updates lately. Come back later.");
         return Ok(());
     }
 
@@ -56,17 +55,7 @@ fn main() -> Result<(), Error> {
     let (build, changelog) = changelog.last_record().unwrap();
 
     let post = format!("<b>Daily Build: {build}</b>\n\n{changelog}");
-    println!("Preview Post:\n\n{post}");
-
-    println!("Are we posting this?");
-    let mut input = String::new();
-    stdin().read_line(&mut input)?;
-
-    if input.trim() == "Y" {
-        println!("Sending...");
-        let bot = bot::Bot::new(bot_token);
-        bot.send_message(&chat_id.clone(), &post)?;
-    }
-
+    let bot = bot::Bot::new(bot_token);
+    bot.send_message(&chat_id.clone(), &post)?;
     Ok(())
 }
