@@ -36,6 +36,7 @@ fn category_icons() -> BTreeMap<&'static str, &'static str> {
         ("grave",    "\u{1f4cc}"),   //:pushpin:
         ("handle",   "\u{1f579}"),   //:joystick:
         ("hapi",     "\u{1f529}"),   //:nut_and_bolt:
+        ("hom",      "\u{1f40d}"),   //:snake:
         ("hdk",      "\u{1f9f0}"),   //:toolbox:
         ("hqueue",   "\u{1f39b}"),   //:control_knobs:
         ("image",    "\u{1f303}"),   //:night_with_stars:
