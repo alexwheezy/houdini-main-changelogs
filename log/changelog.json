@@ -1,12 +1,15 @@
 {
   "data": {
-    "19.5.733": {
+    "19.5.758": {
       "category": {
-        "osx": [
-          "Addressed an issue where Karma XPU would use a lower thread quality of service class than expected. This resulted in the scheduler prioritizing temperature and acoustics over performance."
+        "hom": [
+          "Fixed hou.Geometry.pointLoop that was failing to return a valid loop if the first point was the point at index 0."
         ],
-        "unreal": [
-          "Fixed missing material slot prefixes with material attributes in skeletalmesh inputMaterial parameter attributes are now created when \"Export MaterialParameters\" is selected with skeletal mesh inputFixed an issue where the collider creation of skeletal mesh input couldfail if one or more body setups have simple physical materialsFixed an issue in the new input system with component level materialand physical material overrides where group filters were preventingthe overrides from being applied in some cases"
+        "lop": [
+          "Houdini Hair Procedural no longer changes the basis, type, and wrap attributes when deforming BasisCurves."
+        ],
+        "ui": [
+          "Fixed Color Editor Color correction nested menus that were causing event overflow when reloading the OCIO config file."
         ]
       }
     }
