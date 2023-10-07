@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 
 use anyhow;
+use regex::Regex;
 use std::{
     collections::{BTreeMap, BTreeSet},
     fmt::Display,
@@ -101,6 +102,7 @@ impl Info {
 impl Display for Info {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let icons = category_icons();
+        let backticks = Regex::new(r"`(\w+(\w+|[ ])*)`").unwrap();
         for (key, values) in self.category.iter() {
             writeln!(
                 f,
@@ -110,6 +112,7 @@ impl Display for Info {
             )?;
             for value in values.iter() {
                 for str in value.split("\n") {
+                    let str = backticks.replace_all(str, "<code>$1</code>");
                     writeln!(f, "- {}\n", str)?;
                 }
             }
