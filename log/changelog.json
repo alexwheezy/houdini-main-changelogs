@@ -1,15 +1,12 @@
 {
   "data": {
-    "19.5.758": {
+    "19.5.761": {
       "category": {
-        "hom": [
-          "Fixed hou.Geometry.pointLoop that was failing to return a valid loop if the first point was the point at index 0."
+        "gl": [
+          "Fixed update of package fragments when only the position of the fragment is changing."
         ],
-        "lop": [
-          "Houdini Hair Procedural no longer changes the basis, type, and wrap attributes when deforming BasisCurves."
-        ],
-        "ui": [
-          "Fixed Color Editor Color correction nested menus that were causing event overflow when reloading the OCIO config file."
+        "unreal": [
+          "Added support for creating multiple material instances from a single material identified by distinct sets of material parameters during output translation.\nThe plugin now uses a new way to identify materials (which takes distinct sets of material parameter attributes into account). As a result of this, previously configured \"replacement materials\" on the outputs will likely have to be manually reapplied after this update.\nMesh outputs now also handle the situation where both `unreal_material` and `unreal_material_instance` attributes are present correctly: `unreal_material` is used if it is not the empty string. If it is the empty string then `unreal_material_instance` is used."
         ]
       }
     }
