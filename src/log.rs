@@ -30,7 +30,7 @@ fn category_icons() -> BTreeMap<&'static str, &'static str> {
         ("fur",      "\u{1f98a}"),   //:fox_face:
         ("general",  "\u{1f365}"),   //:fish_cake:
         ("geo",      "\u{1f371}"),   //:bento:
-        ("gl",       "\u{fe0f}"),    //:gear:
+        ("gl",       "\u{2699}"),    //:gear:
         ("gltf",     ""),            //unknown
         ("gplay",    ""),            //unknown
         ("grave",    "\u{1f4cc}"),   //:pushpin:
@@ -48,7 +48,7 @@ fn category_icons() -> BTreeMap<&'static str, &'static str> {
         ("mantra",   "\u{1f4fd}"),   //:film_projector:
         ("maya",     "\u{1f5ff}"),   //:film_projector:
         ("mplay",    "\u{1f4fc}"),   //:vhs:
-        ("op",       "\u{fe0f}"),    //:gear:
+        ("op",       "\u{2699}"),    //:gear:
         ("opencl",   "\u{1f680}"),   //:rocket:
         ("osx",      "\u{1f34f}"),   //:green_apple:
         ("otl",      "\u{1f4e6}"),   //:package:
