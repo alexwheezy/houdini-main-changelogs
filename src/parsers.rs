@@ -1,6 +1,7 @@
 use failure::Fail;
 use itertools::Itertools;
 use select::document::Document;
+use select::node::Node;
 use select::predicate::{Class, Name, Predicate};
 use std::path::Path;
 
@@ -26,42 +27,54 @@ pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError
     for table in doc.find(Class("table-striped").descendant(Name("tr"))) {
         if let Some(path) = table.find(Name("img")).next() {
             let source = path.attr("src").ok_or(ParseChangeLogError::SourceNotFound);
-            // Context category
-            let category = Path::new(source.unwrap())
-                .file_stem()
-                .unwrap()
-                .to_str()
-                .unwrap()
-                .strip_prefix("icon_")
-                .unwrap();
 
-            // Version number of the current program build
-            let build = table
-                .find(Name("td"))
-                .skip(1)
-                .take(1)
-                .next()
-                .ok_or(ParseChangeLogError::BuildNotFound)?
-                .text();
-
-            // Description of the fix in the category
-            let description = table
-                .find(Name("td").descendant(Name("p").or(Name("li"))))
-                .map(|node| {
-                    node.text()
-                        .trim()
-                        .split(' ')
-                        .filter(|s| !s.is_empty())
-                        .join(" ")
-                })
-                .collect::<Vec<String>>()
-                .join("\n");
+            let (category, version, description) = (
+                build_category(source),
+                build_version(&table)?,
+                build_description(&table),
+            );
 
             if description.is_empty() {
                 return Err(ParseChangeLogError::DescriptionNotFound);
             }
-            logs.fill(&build, category, &description);
+
+            logs.fill(&version, category, &description);
         }
     }
     Ok(logs)
+}
+
+fn build_category(source: Result<&str, ParseChangeLogError>) -> &str {
+    Path::new(source.unwrap())
+        .file_stem()
+        .unwrap()
+        .to_str()
+        .unwrap()
+        .strip_prefix("icon_")
+        .unwrap()
+}
+
+fn build_version(table: &Node) -> Result<String, ParseChangeLogError> {
+    let version = table
+        .find(Name("td"))
+        .skip(1)
+        .take(1)
+        .next()
+        .ok_or(ParseChangeLogError::BuildNotFound)?
+        .text();
+    Ok(version)
+}
+
+fn build_description(table: &Node) -> String {
+    table
+        .find(Name("td").descendant(Name("p").or(Name("li"))))
+        .map(|node| {
+            node.text()
+                .trim()
+                .split(' ')
+                .filter(|s| !s.is_empty())
+                .join(" ")
+        })
+        .collect::<Vec<String>>()
+        .join("\n")
 }
