@@ -20,6 +20,7 @@ fn category_icons() -> BTreeMap<&'static str, &'static str> {
     let icons = BTreeMap::from([
         ("3dsmax",   "\u{1fad6}"),   //:teapot:
         ("channel",  "\u{1f4c8}"),   //:chart_with_upwards_trend:
+        ("char",     "\u{1f3c2}"),   //:snowboarder:
         ("character","\u{1f3c2}"),   //:snowboarder:
         ("chop",     "\u{1f4c8}"),   //:chart_with_upwards_trend:
         ("cop2",     "\u{1f3ab}"),   //:ticket:
@@ -43,6 +44,7 @@ fn category_icons() -> BTreeMap<&'static str, &'static str> {
         ("image",    "\u{1f303}"),   //:night_with_stars:
         ("jive",     "\u{1f4c8}"),   //:chart_with_upwards_trend:
         ("karma",    "\u{1f341}"),   //:maple_leaf:
+        ("launcher", "\u{1f680}"),   //:rocket:
         ("license",  "\u{1f511}"),   //:key:
         ("linux",    "\u{1f427}"),   //:penguin:
         ("lop",      "\u{1f4a1}"),   //:bulb:
