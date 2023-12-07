@@ -19,6 +19,7 @@ fn category_icons() -> BTreeMap<&'static str, &'static str> {
     #[rustfmt::skip]
     let icons = BTreeMap::from([
         ("3dsmax",   "\u{1fad6}"),   //:teapot:
+        ("apex",     "\u{1f5c2}"),   //:card_index_dividers:
         ("channel",  "\u{1f4c8}"),   //:chart_with_upwards_trend:
         ("char",     "\u{1f3c2}"),   //:snowboarder:
         ("character","\u{1f3c2}"),   //:snowboarder:
@@ -40,6 +41,7 @@ fn category_icons() -> BTreeMap<&'static str, &'static str> {
         ("hapi",     "\u{1f529}"),   //:nut_and_bolt:
         ("hom",      "\u{1f40d}"),   //:snake:
         ("hdk",      "\u{1f9f0}"),   //:toolbox:
+        ("hda",      "\u{1f4e6}"),   //:package:
         ("hqueue",   "\u{1f39b}"),   //:control_knobs:
         ("image",    "\u{1f303}"),   //:night_with_stars:
         ("jive",     "\u{1f4c8}"),   //:chart_with_upwards_trend:
