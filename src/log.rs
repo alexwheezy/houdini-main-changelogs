@@ -1,6 +1,5 @@
 #![allow(dead_code)]
 
-use anyhow;
 use regex::Regex;
 use std::{
     collections::{BTreeMap, BTreeSet},
@@ -10,7 +9,7 @@ use std::{
 };
 
 // FIXME: Do I need to make the path to the logs static or relative?
-const LOG_PATH: &'static str = "log/changelog.json";
+const LOG_PATH: &str = "log/changelog.json";
 
 type Category = BTreeMap<String, BTreeSet<String>>;
 type Log = BTreeMap<String, Info>;
@@ -115,7 +114,7 @@ impl Display for Info {
                 category = key.to_uppercase()
             )?;
             for value in values.iter() {
-                for str in value.split("\n") {
+                for str in value.split('\n') {
                     let str = backticks.replace_all(str, "<code>$1</code>");
                     writeln!(f, "- {}\n", str)?;
                 }
@@ -153,10 +152,10 @@ impl ChangeLog {
     pub fn fill(&mut self, build: &str, category: &str, description: &str) {
         self.data
             .entry(build.to_owned())
-            .or_insert(Info::default())
+            .or_default()
             .category
             .entry(category.to_owned())
-            .or_insert(BTreeSet::default())
+            .or_default()
             .insert(description.to_owned());
     }
 

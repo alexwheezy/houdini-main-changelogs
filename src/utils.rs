@@ -1,11 +1,10 @@
 #![allow(dead_code)]
 
-use anyhow;
 use std::env;
 use std::fs;
 use std::path::PathBuf;
 
-pub const FILE_NAME: &'static str = "houdini_main_changelogs.last_id";
+pub const FILE_NAME: &str = "houdini_main_changelogs.last_id";
 
 pub fn file_path() -> PathBuf {
     let config_dir = env::var("CONFIG_DIR")

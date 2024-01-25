@@ -27,10 +27,8 @@ fn main() -> Result<(), Error> {
     env_logger::init();
     dotenv().expect("config file .env not found");
 
-    let bot_token = env::var("BOT_TOKEN")
-        .ok()
-        .expect("Expected BOT_TOKEN env var");
-    let chat_id = env::var("CHAT_ID").ok().expect("Expected CHAT_ID env var");
+    let bot_token = env::var("BOT_TOKEN").expect("Expected BOT_TOKEN env var");
+    let chat_id = env::var("CHAT_ID").expect("Expected CHAT_ID env var");
 
     let html = reqwest::get("https://sidefx.com/changelog")?.text()?;
     let document = Document::from(html.as_str());

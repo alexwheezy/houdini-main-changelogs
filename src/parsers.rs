@@ -10,11 +10,11 @@ use crate::log::ChangeLog;
 #[derive(Debug, Fail)]
 pub enum ParseChangeLogError {
     #[fail(display = "build not found")]
-    BuildNotFound,
+    Build,
     #[fail(display = "source not found")]
-    SourceNotFound,
+    Source,
     #[fail(display = "description not found")]
-    DescriptionNotFound,
+    Description,
 }
 
 /// The function parses an HTML page and returns a new object of type [`ChangeLog`]
@@ -26,7 +26,7 @@ pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError
     let mut logs = ChangeLog::new();
     for table in doc.find(Class("table-striped").descendant(Name("tr"))) {
         if let Some(path) = table.find(Name("img")).next() {
-            let source = path.attr("src").ok_or(ParseChangeLogError::SourceNotFound);
+            let source = path.attr("src").ok_or(ParseChangeLogError::Source);
 
             let (category, version, description) = (
                 build_category(source),
@@ -35,7 +35,7 @@ pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError
             );
 
             if description.is_empty() {
-                return Err(ParseChangeLogError::DescriptionNotFound);
+                return Err(ParseChangeLogError::Description);
             }
 
             logs.fill(&version, category, &description);
@@ -60,7 +60,7 @@ fn build_version(table: &Node) -> Result<String, ParseChangeLogError> {
         .skip(1)
         .take(1)
         .next()
-        .ok_or(ParseChangeLogError::BuildNotFound)?
+        .ok_or(ParseChangeLogError::Build)?
         .text();
     Ok(version)
 }
