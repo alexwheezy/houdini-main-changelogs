@@ -9,7 +9,7 @@ use std::{
 };
 
 // FIXME: Do I need to make the path to the logs static or relative?
-const LOG_PATH: &str = "log/changelog.json";
+const LOG_PATH: &str = "log/changelog_dev.json";
 
 type Category = BTreeMap<String, BTreeSet<String>>;
 type Log = BTreeMap<String, Info>;
@@ -128,9 +128,9 @@ impl Display for Info {
 pub struct ChangeLog {
     /// The structure will store a record in the form of the current build number
     /// and a description of the categories with changes between versions.
-    /// { Build: {"Category": { Description } }
-    /// Examples: {"19.5.501": {"sop": "Fix bugs"} }
-    data: Log,
+    /// {MajorBuild { DayliBuild: {"Category": { Description } } }
+    /// Examples: {"19.5": {"19.5.501": {"sop": "Fix bugs"} } }
+    data: BTreeMap<String, Log>,
 }
 
 impl ChangeLog {
@@ -142,16 +142,37 @@ impl ChangeLog {
 
     /// Additional constructor so that you can create a log immediately of
     /// their build version number and [`Log`] object.
-    pub fn with_data(build: &str, log: Info) -> Self {
+    pub fn with_data(daily_build: &str, log: Info) -> Self {
+        let major_build = {
+            let (pos, _) = daily_build
+                .char_indices()
+                .filter(|(_, c)| *c == '.')
+                .nth(1)
+                .unwrap();
+            &daily_build[..pos]
+        };
         Self {
-            data: Log::from([(build.to_owned(), log)]),
+            data: BTreeMap::from([(
+                major_build.to_owned(),
+                Log::from([(daily_build.to_owned(), log)]),
+            )]),
         }
     }
 
     /// We fill the structure with the necessary data obtained during page parsing.
-    pub fn fill(&mut self, build: &str, category: &str, description: &str) {
+    pub fn fill(&mut self, daily_build: &str, category: &str, description: &str) {
+        let major_build = {
+            let (pos, _) = daily_build
+                .char_indices()
+                .filter(|(_, c)| *c == '.')
+                .nth(1)
+                .unwrap();
+            &daily_build[..pos]
+        };
         self.data
-            .entry(build.to_owned())
+            .entry(major_build.to_owned())
+            .or_default()
+            .entry(daily_build.to_owned())
             .or_default()
             .category
             .entry(category.to_owned())
@@ -191,12 +212,13 @@ impl ChangeLog {
     /// The method will update the change log saved in the logs of the previous version
     /// of the build for the current day, so that later on the next update,
     /// restore the change log of the previous version and find the difference in the changes.
-    pub fn update(&mut self) -> anyhow::Result<()> {
+    pub fn update(&mut self, major_build: &str) -> anyhow::Result<()> {
         // Restoring the changelog log of the previous version.
         let prev_changelog = self.load()?;
         // Since we always need the current version, we read the latest log entries.
-        let (prev_build, prev_info) = prev_changelog.last_record().unwrap();
-        let (next_build, next_info) = self.last_record().unwrap();
+        let (prev_build, prev_info) = prev_changelog.last_record(major_build).unwrap();
+        let binding = self.clone();
+        let (next_build, next_info) = binding.last_record(major_build).unwrap();
 
         //TODO: Is it possible to avoid copying here?
         let mut next_info = next_info.clone();
@@ -217,8 +239,11 @@ impl ChangeLog {
         }
         // Delete all empty categories along with entries
         next_info.category.retain(|_, items| !items.is_empty());
-        // Recreate the structure with new records
-        *self = Self::with_data(next_build, next_info);
+        self.data.remove_entry(major_build);
+        self.data.insert(
+            major_build.to_owned(),
+            Log::from([(next_build.to_owned(), next_info)]),
+        );
         Ok(())
     }
 
@@ -228,12 +253,17 @@ impl ChangeLog {
     }
 
     /// Returns the first record of this [`ChangeLog`].
-    pub fn first_record(&self) -> Option<(&String, &Info)> {
-        self.data.first_key_value()
+    pub fn first_record(&self, major_build: &str) -> Option<(&String, &Info)> {
+        // self.data.entry(major_build.to_owned())
+        self.data
+            .get(major_build)
+            .and_then(|log| log.first_key_value())
     }
 
     /// Returns the last record of this [`ChangeLog`].
-    pub fn last_record(&self) -> Option<(&String, &Info)> {
-        self.data.last_key_value()
+    pub fn last_record(&self, major_build: &str) -> Option<(&String, &Info)> {
+        self.data
+            .get(major_build)
+            .and_then(|log| log.last_key_value())
     }
 }

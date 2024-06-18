@@ -37,23 +37,24 @@ fn main() -> Result<(), Error> {
     // Uploading the latest logs for analysis.
     let prev_build = changelog.load().expect("load log failed");
 
-    let prev_record = &prev_build.last_record().unwrap();
-    let next_record = &changelog.last_record().unwrap();
+    for version in ["19.5", "20.0"] {
+        let prev_record = prev_build.last_record(version).unwrap();
+        let next_record = changelog.last_record(version).unwrap();
 
-    // If the previous and next entry do not differ
-    // then changing the state of the logs is not required.
-    if prev_record == next_record {
-        return Ok(());
+        // If the previous and next entry do not differ
+        // then changing the state of the logs is not required.
+        if prev_record == next_record {
+            continue;
+        }
+
+        // Update logs and save to disk.
+        changelog.update(version).unwrap();
+        let (build, changelog) = changelog.last_record(version).unwrap();
+
+        let post = format!("<b>Daily Build: {build}</b>\n\n{changelog}");
+        // let bot = bot::Bot::new(bot_token);
+        // bot.send_message(&chat_id.clone(), &post)?;
     }
-
-    // Update logs and save to disk.
-    changelog.update().unwrap();
     changelog.store().unwrap();
-
-    let (build, changelog) = changelog.last_record().unwrap();
-
-    let post = format!("<b>Daily Build: {build}</b>\n\n{changelog}");
-    let bot = bot::Bot::new(bot_token);
-    bot.send_message(&chat_id.clone(), &post)?;
     Ok(())
 }
