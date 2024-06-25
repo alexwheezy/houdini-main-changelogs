@@ -9,12 +9,12 @@ type ReqwestResult = reqwest::Result<reqwest::Response>;
 const URL: &str = "https://api.telegram.org/bot";
 
 #[derive(Debug)]
-pub struct Bot {
-    token: String,
+pub struct Bot<'a> {
+    token: &'a str,
 }
 
-impl Bot {
-    pub fn new(token: String) -> Self {
+impl<'a> Bot<'a> {
+    pub fn new(token: &'a str) -> Self {
         Bot { token }
     }
 
