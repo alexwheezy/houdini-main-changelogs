@@ -1,16 +1,24 @@
 {
   "data": {
-    "20.0.742": {
-      "category": {
-        "fbx": [
-          "Added support for a 'fbx_node_type' point attribute to the KineFX FBX export nodes. When this attribute is set to \"LODGroup\", the FbxAnimOutput and FbxCharacterOutput ROPs will export the corresponding FBX node with a KFbxLodGroup attribute type. Support for other node types (camera, lights etc.) to be added later."
-        ],
-        "karma": [
-          "Fixed crash when Karma tried to load .usd files that had an unsigned in primvar like: \"uint primvars:arnold:id = <value>\""
-        ],
-        "unreal": [
-          "Fixed an issue where voxel size was incorrect for imported landscapes."
-        ]
+    "19.5": {
+      "19.5.1022": {
+        "category": {
+          "karma": [
+            "Fixed a possible crash in karma when rendering an image when there were no AOVs with LPEs."
+          ]
+        }
+      }
+    },
+    "20.0": {
+      "20.0.749": {
+        "category": {
+          "general": [
+            "Fixed a bug in the Dem Bones Skinning Converter KineFX SOP where the node was computing the correct conversion but listing capture region weights with incorrect indices."
+          ],
+          "karma": [
+            "Fixed a possible crash in karma when rendering an image when there were no AOVs with LPEs."
+          ]
+        }
       }
     }
   }
