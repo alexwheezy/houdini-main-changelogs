@@ -9,7 +9,7 @@ use std::{
 };
 
 // FIXME: Do I need to make the path to the logs static or relative?
-const LOG_PATH: &str = "log/changelog_dev.json";
+const LOG_PATH: &str = "log/changelog.json";
 
 type Category = BTreeMap<String, BTreeSet<String>>;
 type Log = BTreeMap<String, Info>;

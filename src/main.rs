@@ -52,9 +52,10 @@ fn main() -> Result<(), Error> {
         let (build, changelog) = changelog.last_record(version).unwrap();
 
         let post = format!("<b>Daily Build: {build}</b>\n\n{changelog}");
-        // let bot = bot::Bot::new(bot_token);
-        // bot.send_message(&chat_id.clone(), &post)?;
+        let bot = bot::Bot::new(&bot_token);
+        bot.send_message(&chat_id.clone(), &post)?;
     }
+    // Save the latest changelog to disk.
     changelog.store().unwrap();
     Ok(())
 }
