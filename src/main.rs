@@ -37,13 +37,17 @@ fn main() -> Result<(), Error> {
     // Uploading the latest logs for analysis.
     let prev_build = changelog.load().expect("load log failed");
 
-    for version in ["19.5", "20.0"] {
+    for version in ["19.5", "20.0", "20.5"] {
         let prev_record = prev_build.last_record(version).unwrap();
-        let next_record = changelog.last_record(version).unwrap();
+        let next_record = changelog.last_record(version);
+
+        if next_record.is_none() {
+            continue;
+        }
 
         // If the previous and next entry do not differ
         // then changing the state of the logs is not required.
-        if prev_record == next_record {
+        if prev_record == next_record.unwrap() {
             continue;
         }
 
