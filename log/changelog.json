@@ -1,6 +1,31 @@
 {
   "data": {
     "19.5": {
+      "19.5.1017": {
+        "category": {
+          "fbx": [
+            "When the 'fbx_node_type' point attribute is set to \"Null\", the FbxAnimOutput and FbxCharacterOutput ROPs will now export the corresponding FBX node with a KFbxNull attribute type."
+          ],
+          "lop": [
+            "Fixes a bug in the Karma Render Properties LOP which stripped layers above layer breaks when merging the render properties, products and rendervars."
+          ]
+        }
+      },
+      "19.5.1018": {
+        "category": {
+          "lop": [
+            "In the loputils module, use IsA(UsdGeom.PointInstancer) to check if a prim is a point instancer instead of looking at the type name."
+          ]
+        }
+      },
+      "19.5.1019": {
+        "category": {
+          "sop": [
+            "Change order of operations to reduce number of tests to see if display and render flags are the same, this can avoid surprising cooks when parameters have to be evaluated.",
+            "The Vellum Reference Frame was double counting pivots when computing angular velocity, causing extreme motion if the reference geometry was away from the origin."
+          ]
+        }
+      },
       "19.5.1022": {
         "category": {
           "karma": [
@@ -10,13 +35,10 @@
       }
     },
     "20.0": {
-      "20.0.749": {
+      "20.0.753": {
         "category": {
-          "general": [
-            "Fixed a bug in the Dem Bones Skinning Converter KineFX SOP where the node was computing the correct conversion but listing capture region weights with incorrect indices."
-          ],
-          "karma": [
-            "Fixed a possible crash in karma when rendering an image when there were no AOVs with LPEs."
+          "rop": [
+            "Fixed OpenColorIO correction on the OpenGL ROP."
           ]
         }
       }
