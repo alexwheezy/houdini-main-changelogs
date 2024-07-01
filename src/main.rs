@@ -38,16 +38,16 @@ fn main() -> Result<(), Error> {
     let prev_build = changelog.load().expect("load log failed");
 
     for version in ["19.5", "20.0", "20.5"] {
-        let prev_record = prev_build.last_record(version).unwrap();
+        let prev_record = prev_build.last_record(version);
         let next_record = changelog.last_record(version);
 
-        if next_record.is_none() {
+        if prev_record.is_none() || next_record.is_none() {
             continue;
         }
 
         // If the previous and next entry do not differ
         // then changing the state of the logs is not required.
-        if prev_record == next_record.unwrap() {
+        if prev_record.unwrap() == next_record.unwrap() {
             continue;
         }
 
