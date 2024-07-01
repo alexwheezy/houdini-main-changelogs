@@ -3,9 +3,6 @@
     "19.5": {
       "19.5.1017": {
         "category": {
-          "fbx": [
-            "When the 'fbx_node_type' point attribute is set to \"Null\", the FbxAnimOutput and FbxCharacterOutput ROPs will now export the corresponding FBX node with a KFbxNull attribute type."
-          ],
           "lop": [
             "Fixes a bug in the Karma Render Properties LOP which stripped layers above layer breaks when merging the render properties, products and rendervars."
           ]
@@ -35,10 +32,10 @@
       }
     },
     "20.0": {
-      "20.0.753": {
+      "20.0.755": {
         "category": {
-          "rop": [
-            "Fixed OpenColorIO correction on the OpenGL ROP."
+          "sop": [
+            "Fixed a bug in the RBD Cone Twist Constraints SOP which tagged the motor_target and motor_targetprev attributes as quaternions while they are relative to the constrained pieces and shouldn't be transformed."
           ]
         }
       }
