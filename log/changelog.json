@@ -1,24 +1,9 @@
 {
   "data": {
     "19.5": {
-      "19.5.1017": {
-        "category": {
-          "lop": [
-            "Fixes a bug in the Karma Render Properties LOP which stripped layers above layer breaks when merging the render properties, products and rendervars."
-          ]
-        }
-      },
-      "19.5.1018": {
-        "category": {
-          "lop": [
-            "In the loputils module, use IsA(UsdGeom.PointInstancer) to check if a prim is a point instancer instead of looking at the type name."
-          ]
-        }
-      },
       "19.5.1019": {
         "category": {
           "sop": [
-            "Change order of operations to reduce number of tests to see if display and render flags are the same, this can avoid surprising cooks when parameters have to be evaluated.",
             "The Vellum Reference Frame was double counting pivots when computing angular velocity, causing extreme motion if the reference geometry was away from the origin."
           ]
         }
@@ -29,13 +14,35 @@
             "Fixed a possible crash in karma when rendering an image when there were no AOVs with LPEs."
           ]
         }
+      },
+      "19.5.1030": {
+        "category": {
+          "solaris": [
+            "Fixed an issue where dragging a handle across the view plane when looking through a camera in a scene graph viewer jumped to an incorrect position."
+          ],
+          "ui": [
+            "Fixed an issue where hidden parameters in a vertical layout could cause other parameters to be shorter than they could be."
+          ]
+        }
+      },
+      "19.5.1031": {
+        "category": {
+          "maya": [
+            "Fixed an issue where the Apple silicion builds of Houdini Engine for Maya were not being included in the installer."
+          ]
+        }
       }
     },
     "20.0": {
-      "20.0.755": {
+      "20.0.759": {
         "category": {
-          "sop": [
-            "Fixed a bug in the RBD Cone Twist Constraints SOP which tagged the motor_target and motor_targetprev attributes as quaternions while they are relative to the constrained pieces and shouldn't be transformed."
+          "crowd": [
+            "Added a Reference Direction parameter to the Crowd MotionPath Follow SOP to control which axis is aligned with the curve tangent, supporting agents which have a facing direction other than the Z axis.",
+            "Added a Vertical FOV control for obstacle avoidance in the Crowd MotionPath Avoid SOP.",
+            "Added an option to the Crowd MotionPath Avoid SOP to enable 3D steering. Previously, steering only occurred around the agent's up vector."
+          ],
+          "ui": [
+            "Fixed crash when using an invalid adhoc group string in the viewport group list widget."
           ]
         }
       }
