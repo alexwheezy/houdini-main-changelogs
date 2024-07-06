@@ -1,20 +1,6 @@
 {
   "data": {
     "19.5": {
-      "19.5.1019": {
-        "category": {
-          "sop": [
-            "The Vellum Reference Frame was double counting pivots when computing angular velocity, causing extreme motion if the reference geometry was away from the origin."
-          ]
-        }
-      },
-      "19.5.1022": {
-        "category": {
-          "karma": [
-            "Fixed a possible crash in karma when rendering an image when there were no AOVs with LPEs."
-          ]
-        }
-      },
       "19.5.1030": {
         "category": {
           "solaris": [
@@ -34,15 +20,22 @@
       }
     },
     "20.0": {
-      "20.0.759": {
+      "20.0.760": {
         "category": {
           "crowd": [
-            "Added a Reference Direction parameter to the Crowd MotionPath Follow SOP to control which axis is aligned with the curve tangent, supporting agents which have a facing direction other than the Z axis.",
-            "Added a Vertical FOV control for obstacle avoidance in the Crowd MotionPath Avoid SOP.",
-            "Added an option to the Crowd MotionPath Avoid SOP to enable 3D steering. Previously, steering only occurred around the agent's up vector."
+            "The Crowd MotionPath Avoid SOP now supports time-dependent obstacle geometry."
           ],
-          "ui": [
-            "Fixed crash when using an invalid adhoc group string in the viewport group list widget."
+          "general": [
+            "Husk (and the karma delegate) should handle invalid and unusual configurations of render settings/products more robustly."
+          ],
+          "image": [
+            "The OpenEXR image driver has a new boolean configuration option \"legacy_mode\" which will store all channels in a single part instead of grouping channels in multiple parts."
+          ],
+          "karma": [
+            "Fixed a memory leak with displacement shading."
+          ],
+          "solaris": [
+            "Fixed a crash when rendering the viewport using a render settings prim that had no products with valid render vars."
           ]
         }
       }
