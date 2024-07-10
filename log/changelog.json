@@ -1,41 +1,61 @@
 {
   "data": {
-    "19.5": {
-      "19.5.1030": {
+    "20.0": {
+      "20.0.763": {
         "category": {
-          "solaris": [
-            "Fixed an issue where dragging a handle across the view plane when looking through a camera in a scene graph viewer jumped to an incorrect position."
+          "crowd": [
+            "Added an option to the Crowd MotionPath Avoid SOP to control whether agents are steered back to follow their original paths, or are just steered to the end point of their original path (the previous behaviour)."
           ],
           "ui": [
-            "Fixed an issue where hidden parameters in a vertical layout could cause other parameters to be shorter than they could be."
+            "Fix crash when switching to the Viewer State Browser tab when there is no active scene viewer."
           ]
         }
       },
-      "19.5.1031": {
+      "20.0.764": {
         "category": {
-          "maya": [
-            "Fixed an issue where the Apple silicion builds of Houdini Engine for Maya were not being included in the installer."
+          "karma": [
+            "XPU: fixed an Optix curve motionblur-related bug"
+          ],
+          "pdg": [
+            "Fixed a bug that caused HDA Processor to unncessarily recook File node inputs for each sub work item of a batch work item."
           ]
         }
       }
     },
-    "20.0": {
-      "20.0.760": {
+    "20.5": {
+      "20.5.292": {
         "category": {
-          "crowd": [
-            "The Crowd MotionPath Avoid SOP now supports time-dependent obstacle geometry."
+          "apex": [
+            "Add a hotkey symbol to the APEX Animate state for toggling the visibility of xform handles. The visibility can be toggled by tapping the key, or temporarily disabled by holding the key.",
+            "Add an (unbound) hotkey symbol to the APEX Animate state for toggling the xform handle between World and Local alignment modes.",
+            "Add detailed prompts when orientation picking or moving, aligning, or snapping a handle to a control in the APEX Animate state.",
+            "Added a hotkey symbol for the APEX Animate state to toggle the visibility of all visible controls. When pressed, all controls in the state will be hidden, and when pressed again (or released) will restore the previously visible controls.",
+            "Added new actions to the selection sets in the APEX Animate state for replacing one or more characters in the sets with another character in the scene. This is particularly useful when a character's name is changed upstream to easily replace the old character's name in selection sets with the new character's name."
           ],
-          "general": [
-            "Husk (and the karma delegate) should handle invalid and unusual configurations of render settings/products more robustly."
+          "char": [
+            "Fixed a potential crash when the APEX Character Deformation display option was enabled."
           ],
-          "image": [
-            "The OpenEXR image driver has a new boolean configuration option \"legacy_mode\" which will store all channels in a single part instead of grouping channels in multiple parts."
+          "hqueue": [
+            "Added a search filter to the 'Add Clients to Group' page in HQueue.",
+            "Fix a bug that causes USD generation in HQueue to create platform-specific output image paths that are not accessible to all machines on a farm.",
+            "Fix sorting by CPU and memory information in HQueue clients tables.",
+            "Fixed a bug where HQueue render and simulation jobs failed when the output driver ROP node was contained in a locked HDA.",
+            "Fixed bug that limited clients tables to 100 rows in HQueue by adding a page size limiter and page navigation controls to the 'Clients' and 'Add Clients' pages."
           ],
           "karma": [
-            "Fixed a memory leak with displacement shading."
+            "There's a new recipe for the MaterialX Image node that adds karma specific parameters to control texture quality."
+          ],
+          "pdg": [
+            "Fixed a bug that caused HDA Processor to unncessarily recook File node inputs for each sub work item of a batch work item."
           ],
           "solaris": [
-            "Fixed a crash when rendering the viewport using a render settings prim that had no products with valid render vars."
+            "Stage Manager - Fixed a bug that caused jittering when transforming prims with Physics on. Enabled Physics in the state and transforms panel."
+          ],
+          "sop": [
+            "Fixes the animation transform handle when translate parameter has keys on the RBD Car Follow Path SOP."
+          ],
+          "windows": [
+            "Fixed a bug where the py23convert, expandHDA and collapseHDA utility scripts failed to run on Windows."
           ]
         }
       }
