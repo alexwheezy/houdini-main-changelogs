@@ -70,6 +70,7 @@ fn category_icons() -> BTreeMap<&'static str, &'static str> {
         ("unity",    "\u{1f30f}"),   //:earth_asia:
         ("unreal",   "\u{1f52e}"),   //:crystal_ball:
         ("vex",      "\u{1f393}"),   //:mortar_board:
+        ("vk",       "\u{1f30b}"),   //:volcano:
         ("vop",      "\u{1f393}"),   //:mortar_board:
         ("windows",  "\u{1f4ce}"),   //:paperclip:
     ]);
