@@ -1,19 +1,58 @@
 {
   "data": {
     "19.5": {
-      "19.5.1039": {
+      "19.5.1067": {
         "category": {
-          "lop": [
-            "Creating LOP nodes from the tab menu in the viewport now creates new nodes inline (instead of brnached) by default. Branching can be achieved by chift-selecting the tool. This makes LOP tools behave more like SOP tools."
+          "solaris": [
+            "Prevent a crash when using interval<=0 with the %keep autocollection."
+          ]
+        }
+      }
+    },
+    "20.0": {
+      "20.0.794": {
+        "category": {
+          "general": [
+            "Fixed a bug where setting Mtlx geomprop reader signature to \"Color\" or \"Vector 3\" for \"st\" primvar could sometimes cause shader to fail to compile."
+          ],
+          "solaris": [
+            "Looking through an animated camera with a render region active will now properly render motion blur taking into account the camera motion.",
+            "Prevent a crash when using interval<=0 with the %keep autocollection."
+          ],
+          "sop": [
+            "Added a Rest Frame parameter to the Agent Definition Cache SOP to control which frame the input is evaluated at when saving the agent definition and attributes to disk."
           ]
         }
       }
     },
     "20.5": {
-      "20.5.297": {
+      "20.5.322": {
         "category": {
+          "apex": [
+            "Fixed a bug where the lookat component would break if the driver has no parent."
+          ],
+          "general": [
+            "Clamping the colliders frame range to the startframe defined by the mpmcontainer. Without this clamp, the mpmsolver would sample and interpolate the colliders from startframe-1 to startframe which could yeild unexpected results.",
+            "Promoted the \"Enable Automatic Resimulation\" toggle to the \"Advanced > Simulation\" tab of the mpmsolver."
+          ],
+          "houdini": [
+            "Python HUD Handle - Allow moving slider with mouse wheel\nModify CTRL-Wheel to increment by 1 (to match the parm editor)\nAdd SHIFT+CTRL+Wheel to increment by .001"
+          ],
+          "lop": [
+            "Add \"showlopstage\" standard parameter to \"LOP Properties\" folder on the \"Node Properties\" tab for easy creation of this spare parameter.",
+            "When inside SOP Create and SOP Modify LOP nodes, the wires in wire over shaded mode now draw with the default color instead of white."
+          ],
+          "solaris": [
+            "Looking through an animated camera with a render region active will now properly render motion blur taking into account the camera motion.",
+            "Prevent a crash when using interval<=0 with the %keep autocollection."
+          ],
+          "sop": [
+            "Added a Rest Frame parameter to the Agent Definition Cache SOP to control which frame the input is evaluated at when saving the agent definition and attributes to disk.",
+            "Fix python error on selection change triggered by manual selection modes within the Transient Constraint tool in APEX animate.",
+            "Fixed an issue with the Point Replicate SOP where normals inherited from the source points were unexpectedly transformed again by the source point's transform. For existing instances of the node, the \"Attributes to Transform\" parameter is set to \"P N\" to preserve the old behaviour."
+          ],
           "vk": [
-            "Fix Bug where volumes are overlit in viewport Fix Bug where color ramp isn't used in Volume visualizer Fix Bug where SubDibvision curves with Material X material applied don't render properly Fix Bug where Image View in Solaris viewport displays only black Fix Bug where some objects aren't drawn in RBD sims Fix crash when enabling construction plane with volume in scene Improve performance regression for Agent"
+            "Changing the AOV in the Solaris viewport when the delegate has stopped rendering will now restart the render with the new AOV."
           ]
         }
       }
