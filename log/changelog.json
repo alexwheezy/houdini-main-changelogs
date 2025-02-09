@@ -1,58 +1,107 @@
 {
   "data": {
-    "19.5": {
-      "19.5.1067": {
+    "20.0": {
+      "20.0.972": {
         "category": {
-          "solaris": [
-            "Prevent a crash when using interval<=0 with the %keep autocollection."
+          "ui": [
+            "Pixel inspectors in the 2D and 3D viewers now display the pixel's exposure value (Ev) alongside luminance."
           ]
         }
-      }
-    },
-    "20.0": {
-      "20.0.794": {
+      },
+      "20.0.975": {
         "category": {
-          "general": [
-            "Fixed a bug where setting Mtlx geomprop reader signature to \"Color\" or \"Vector 3\" for \"st\" primvar could sometimes cause shader to fail to compile."
-          ],
-          "solaris": [
-            "Looking through an animated camera with a render region active will now properly render motion blur taking into account the camera motion.",
-            "Prevent a crash when using interval<=0 with the %keep autocollection."
+          "otl": [
+            "Fixed issue where hotl -C would fail to include the HDA's contents."
           ],
           "sop": [
-            "Added a Rest Frame parameter to the Agent Definition Cache SOP to control which frame the input is evaluated at when saving the agent definition and attributes to disk."
+            "The minimum brush radius for Texture Mask Paint has been reduced to 1e-6."
           ]
         }
       }
     },
     "20.5": {
-      "20.5.322": {
+      "20.5.495": {
         "category": {
-          "apex": [
-            "Fixed a bug where the lookat component would break if the driver has no parent."
+          "vk": [
+            "Renaming a MaterialX VOP network will no longer cause the material to lose all its textures."
+          ]
+        }
+      },
+      "20.5.496": {
+        "category": {
+          "vk": [
+            "Fix polysurface primitives potentially using wrong material, when default material is assigned",
+            "RGBA images from COPs used as viewport textures are now properly flagged as requiring a transparency pass, so they appear correctly in all transparency modes."
+          ]
+        }
+      },
+      "20.5.499": {
+        "category": {
+          "crowd": [
+            "Fixed a bug in the Agent Vellum Unpack SOP where pre-rolling from a rest clip produced incorrect poses when an input agent was blending between multiple clips (e.g. during a clip transition)."
           ],
           "general": [
-            "Clamping the colliders frame range to the startframe defined by the mpmcontainer. Without this clamp, the mpmsolver would sample and interpolate the colliders from startframe-1 to startframe which could yeild unexpected results.",
-            "Promoted the \"Enable Automatic Resimulation\" toggle to the \"Advanced > Simulation\" tab of the mpmsolver."
-          ],
-          "houdini": [
-            "Python HUD Handle - Allow moving slider with mouse wheel\nModify CTRL-Wheel to increment by 1 (to match the parm editor)\nAdd SHIFT+CTRL+Wheel to increment by .001"
-          ],
-          "lop": [
-            "Add \"showlopstage\" standard parameter to \"LOP Properties\" folder on the \"Node Properties\" tab for easy creation of this spare parameter.",
-            "When inside SOP Create and SOP Modify LOP nodes, the wires in wire over shaded mode now draw with the default color instead of white."
-          ],
-          "solaris": [
-            "Looking through an animated camera with a render region active will now properly render motion blur taking into account the camera motion.",
-            "Prevent a crash when using interval<=0 with the %keep autocollection."
+            "Cryptomatte data planes now always write out oiio:ColorSpace attribute with the data role to prevent them from being inadvertently color-managed in comp."
           ],
           "sop": [
-            "Added a Rest Frame parameter to the Agent Definition Cache SOP to control which frame the input is evaluated at when saving the agent definition and attributes to disk.",
-            "Fix python error on selection change triggered by manual selection modes within the Transient Constraint tool in APEX animate.",
-            "Fixed an issue with the Point Replicate SOP where normals inherited from the source points were unexpectedly transformed again by the source point's transform. For existing instances of the node, the \"Attributes to Transform\" parameter is set to \"P N\" to preserve the old behaviour."
+            "Fixed a crash in the AttribCopy SOP when the same name is used for both a point and vertex attribute."
+          ]
+        }
+      },
+      "20.5.500": {
+        "category": {
+          "cop": [
+            "Fix a crash when a image layer over 4 billion bytes is flushed from the GPU."
+          ],
+          "general": [
+            "Fixed an issue where Houdini would crash if no valid collision velocity field was passed to the FLIP solver with multigrid preconditioner enabled when running the guided ocean shelf tool."
+          ],
+          "karma": [
+            "A warning is now output from both \"hgpuinfo -l\" and Karma XPU if the CUDA_VISIBLE_DEVICES envvar is detected"
+          ],
+          "ui": [
+            "Pixel inspectors in the 2D and 3D viewers now display the pixel's exposure value (Ev) alongside luminance."
+          ],
+          "unreal": [
+            "Ensure internal session data is cleared when the plugin connects to a new Houdini session."
+          ]
+        }
+      },
+      "20.5.501": {
+        "category": {
+          "ui": [
+            "Fixed a bug in the Qt 6 build where opening the node recipes dialog produced Python errors.",
+            "Fixed a bug where undo and redo did not work in the Edit Parameter Interface window."
+          ]
+        }
+      },
+      "20.5.502": {
+        "category": {
+          "karma": [
+            "Fixed a bug where background plate material with partial opacity would crash under variance convergence mode."
+          ],
+          "otl": [
+            "Fixed issue where hotl -C would fail to include the HDA's contents."
+          ],
+          "sop": [
+            "The minimum brush radius for Texture Mask Paint has been reduced to 1e-6."
+          ],
+          "ui": [
+            "Fixed a bug in the Qt 6 build that caused the Houdini user interface to draw incorrectly on some Linux systems."
+          ],
+          "unreal": [
+            "Fixed an issue where connecting to a new session would incorrecly clear input index."
           ],
           "vk": [
-            "Changing the AOV in the Solaris viewport when the delegate has stopped rendering will now restart the render with the new AOV."
+            "Fixed a bug where a per-instance primvar used for Base Color would cause instances not to render in the Vulkan viewport, or to render without applying the correct color",
+            "Fixed a bug where primitive picking on polygon surfaces in wireframe mode would always behave as if \"Select Wireframe Surfaces as if Solid\" was enabled"
+          ]
+        }
+      },
+      "20.5.503": {
+        "category": {
+          "apex": [
+            "Fixed a bug where the last key was lost when merging APEX Animation Layers."
           ]
         }
       }
