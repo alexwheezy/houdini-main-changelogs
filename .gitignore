@@ -89,3 +89,4 @@ app*
 
 # Log files
 log/
+log/*
