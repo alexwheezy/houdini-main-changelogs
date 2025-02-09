@@ -35,10 +35,8 @@ pub fn parse_change_log(doc: &Document) -> Result<ChangeLog, ParseChangeLogError
             );
 
             if description.is_empty() {
-                return Err(ParseChangeLogError::Description);
+                logs.fill(&version, category, &description);
             }
-
-            logs.fill(&version, category, &description);
         }
     }
     Ok(logs)
