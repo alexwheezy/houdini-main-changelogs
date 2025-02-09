@@ -86,3 +86,6 @@ $RECYCLE.BIN/
 
 # Symlinks
 app*
+
+# Log files
+log/
